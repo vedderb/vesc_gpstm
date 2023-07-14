@@ -65,8 +65,15 @@
 #define STM32_LSI_ENABLED                   TRUE
 #define STM32_LSE_ENABLED                   FALSE
 #define STM32_SW                            STM32_SW_PLLRCLK
+
+// External 8M
 #define STM32_PLLSRC                        STM32_PLLSRC_HSE
 #define STM32_PLLM_VALUE                    2
+
+// Internal
+//#define STM32_PLLSRC                        STM32_PLLSRC_HSI16
+//#define STM32_PLLM_VALUE                    4
+
 #define STM32_PLLN_VALUE                    84
 #define STM32_PLLPDIV_VALUE                 0
 #define STM32_PLLP_VALUE                    7
