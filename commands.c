@@ -216,7 +216,7 @@ void commands_process_packet(unsigned char *data, unsigned int len,
 		char *hw_name = (char*)data + ind;
 		ind += strlen(hw_name) + 1;
 
-		if (hw != HW_TYPE_VESC_BMS || strcmp(hw_name, HW_NAME) != 0) {
+		if (hw != HW_TYPE_CUSTOM_MODULE || strcmp(hw_name, HW_NAME) != 0) {
 			break;
 		}
 
