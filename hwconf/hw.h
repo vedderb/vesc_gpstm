@@ -37,16 +37,6 @@
 #define HW_DEFAULT_ID			(CONF_CONTROLLER_ID >= 0 ? CONF_CONTROLLER_ID : hw_id_from_uuid())
 #endif
 
-#ifndef HW_ADC_TEMP_SENSORS
-#define HW_ADC_TEMP_SENSORS		6
-#endif
-
-#ifndef ADC_CH_TEMP6
-#define ADC_CH_TEMP6			ADC_CH_TEMP5
-#define LINE_TEMP_6				LINE_TEMP_5
-#define LINE_TEMP_6_EN			LINE_TEMP_5_EN
-#endif
-
 #ifndef HW_INIT_HOOK
 #define HW_INIT_HOOK()
 #endif
@@ -56,21 +46,12 @@
 #define HW_CAN_OFF()
 #endif
 
-#ifndef LINE_CURR_MEASURE_EN
-#define CURR_MEASURE_ON()
-#define CURR_MEASURE_OFF()
-#endif
-
 #ifndef HW_SEND_DATA
 #define HW_SEND_DATA(send_func)
 #endif
 
 #ifndef HW_SEND_CAN_DATA
 #define HW_SEND_CAN_DATA()
-#endif
-
-#ifndef NTC_TEMP_WITH_IND
-#define NTC_TEMP_WITH_IND(adc, ind) NTC_TEMP(adc)
 #endif
 
 // Functions
