@@ -133,10 +133,6 @@ static THD_FUNCTION(timeout_thread, arg) {
 		// otherwise the watchdog won't be feed and MCU will reset. All threads should
 		// be monitored
 
-		if (feed_counter[THREAD_DCDC] < MIN_THREAD_ITERATIONS) {
-			threads_ok = false;
-		}
-
 		if (feed_counter[THREAD_CANBUS] < MIN_THREAD_ITERATIONS) {
 			threads_ok = false;
 		}

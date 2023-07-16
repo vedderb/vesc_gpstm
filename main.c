@@ -96,9 +96,6 @@ int main(void) {
 	conf_general_apply_hw_limits((main_config_t*)&backup.config);
 
 	timer_init();
-
-	// USB needs some time to detect if a cable is connected, so start it before powering the regulators
-	// to not waste too much power.
 	commands_init();
 
 	comm_can_init();

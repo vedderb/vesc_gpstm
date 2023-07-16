@@ -34,7 +34,7 @@
 
 // Init codes for the persistent storage. Change the config code when updating the config struct
 // in a way that is not backwards compatible.
-#define VAR_INIT_CODE				59763222
+#define VAR_INIT_CODE				59763223
 
 #define HW_NAME_MAX_CHARS			16
 

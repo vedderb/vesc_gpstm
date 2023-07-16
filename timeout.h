@@ -27,7 +27,6 @@
 #define MIN_THREAD_ITERATIONS	1
 
 typedef enum {
-	THREAD_DCDC = 0,
 	THREAD_CANBUS
 } WWDT_THREAD_TYPES;
 
