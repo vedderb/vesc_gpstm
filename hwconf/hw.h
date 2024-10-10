@@ -22,7 +22,7 @@
 
 #include <math.h>
 
-#include "hw_lb_ant.h"
+#include HW_HEADER
 
 // Macros
 #ifndef LED_OFF

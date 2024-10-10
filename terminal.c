@@ -127,6 +127,17 @@ void terminal_process_string(char *str) {
 
 		commands_printf("Configuration flash write counter: %d", backup.conf_flash_write_cnt);
 		commands_printf(" ");
+	} else if (strcmp(argv[0], "fw_info") == 0) {
+		commands_printf("Git Branch: %s", GIT_BRANCH_NAME);
+		commands_printf("Git Hash  : %s", GIT_COMMIT_HASH);
+	
+#ifdef USER_GIT_BRANCH_NAME
+		commands_printf("User Git Branch: %s", USER_GIT_BRANCH_NAME);
+#endif
+#ifdef USER_GIT_COMMIT_HASH
+		commands_printf("User Git Hash  : %s", USER_GIT_COMMIT_HASH);
+#endif
+		commands_printf(" ");
 	} else if (strcmp(argv[0], "uptime") == 0) {
 		commands_printf("Uptime: %.2f s", (double)chVTGetSystemTimeX() / (double)CH_CFG_ST_FREQUENCY);
 	} else if (strcmp(argv[0], "adcs") == 0) {
@@ -160,6 +171,9 @@ void terminal_process_string(char *str) {
 
 		commands_printf("hw_status");
 		commands_printf("  Print some hardware status information.");
+		
+		commands_printf("fw_info");
+		commands_printf("  Print detailed firmware info.");
 
 		commands_printf("can_scan");
 		commands_printf("  Scan CAN-bus using ping commands, and print all devices that are found.");
