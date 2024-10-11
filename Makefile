@@ -40,6 +40,7 @@ ifeq ($(USE_OPT),)
   endif
   
   USE_OPT += $(build_args)
+  USE_OPT += -fsingle-precision-constant -Wdouble-promotion
 endif
 
 # C specific options here (added to USE_OPT).
