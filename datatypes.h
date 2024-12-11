@@ -349,7 +349,18 @@ typedef enum {
 	COMM_SET_APPCONF_NO_STORE,
 	COMM_GET_GNSS,
 
-	COMM_LOG_DATA_F64,
+	COMM_LOG_DATA_F64						= 151,
+	
+	// COMM_LISP_RMSG						= 152,
+
+	//Placeholders for pinlock commands
+	// COMM_PINLOCK1						= 153,
+	// COMM_PINLOCK2						= 154,
+	// COMM_PINLOCK3						= 155,
+	
+	// COMM_SHUTDOWN						= 156,
+	
+	COMM_FW_INFO							= 157,
 } COMM_PACKET_ID;
 
 #endif /* DATATYPES_H_ */
