@@ -25,6 +25,7 @@
 #include "buffer.h"
 #include "utils.h"
 #include "timeout.h"
+#include "flash_helper.h"
 
 #include <string.h>
 
@@ -97,7 +98,33 @@ void comm_can_init(void) {
 			cancom_status_thread, NULL);
 }
 
-void comm_can_set_baud(CAN_BAUD baud) {
+CAN_BAUD comm_can_kbits_to_baud(int kbits) {
+	CAN_BAUD new_baud = CAN_BAUD_INVALID;
+	switch (kbits) {
+	case 125: new_baud = CAN_BAUD_125K; break;
+	case 250: new_baud = CAN_BAUD_250K; break;
+	case 500: new_baud = CAN_BAUD_500K; break;
+	case 1000: new_baud = CAN_BAUD_1M; break;
+	case 10: new_baud = CAN_BAUD_10K; break;
+	case 20: new_baud = CAN_BAUD_20K; break;
+	case 50: new_baud = CAN_BAUD_50K; break;
+	case 75: new_baud = CAN_BAUD_75K; break;
+	case 100: new_baud = CAN_BAUD_100K; break;
+	default: new_baud = CAN_BAUD_INVALID; break;
+	}
+	return new_baud;
+}
+
+void comm_can_set_baud(CAN_BAUD baud, int delay_msec) {
+	if (baud == CAN_BAUD_INVALID) {
+		return;
+	}
+
+	if (delay_msec > 0) {
+		canStop(&HW_CAN_DEV);
+		chThdSleepMilliseconds(delay_msec);
+	}
+
 	switch (baud) {
 	case CAN_BAUD_125K:	set_timing(15, 14, 4); break;
 	case CAN_BAUD_250K:	set_timing(7, 14, 4); break;
@@ -255,6 +282,14 @@ bool comm_can_ping(uint8_t controller_id, HW_TYPE *hw_type) {
 	}
 
 	return ret != 0;
+}
+
+void comm_can_send_update_baud(int kbits, int delay_msec) {
+	int32_t send_index = 0;
+	uint8_t buffer[8];
+	buffer_append_int16(buffer, kbits, &send_index);
+	buffer_append_int16(buffer, delay_msec, &send_index);
+	comm_can_transmit_eid(255 | ((uint32_t)CAN_PACKET_UPDATE_BAUD << 8), buffer, send_index);
 }
 
 static THD_FUNCTION(cancom_read_thread, arg) {
@@ -484,6 +519,18 @@ static void decode_msg(uint32_t eid, uint8_t *data8, int len, bool is_replaced) 
 	switch (cmd) {
 	case CAN_PACKET_PING:
 		break;
+
+	case CAN_PACKET_UPDATE_BAUD: {
+		ind = 0;
+		int kbits = buffer_get_int16(data8, &ind);
+		int delay_msec = buffer_get_int16(data8, &ind);
+		CAN_BAUD baud = comm_can_kbits_to_baud(kbits);
+		if (baud != CAN_BAUD_INVALID) {
+			comm_can_set_baud(baud, delay_msec);
+			backup.config.can_baud_rate = baud;
+			flash_helper_store_backup_data();
+		}
+	} break;
 
 	default:
 		break;

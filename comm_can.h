@@ -27,11 +27,13 @@
 
 // Functions
 void comm_can_init(void);
-void comm_can_set_baud(CAN_BAUD baud);
+CAN_BAUD comm_can_kbits_to_baud(int kbits);
+void comm_can_set_baud(CAN_BAUD baud, int delay_msec);
 void comm_can_transmit_eid(uint32_t id, const uint8_t *data, uint8_t len);
 void comm_can_transmit_sid(uint32_t id, const uint8_t *data, uint8_t len);
 void comm_can_set_sid_rx_callback(void (*p_func)(uint32_t id, uint8_t *data, uint8_t len));
 void comm_can_send_buffer(uint8_t controller_id, uint8_t *data, unsigned int len, uint8_t send);
 bool comm_can_ping(uint8_t controller_id, HW_TYPE *hw_type);
+void comm_can_send_update_baud(int kbits, int delay_msec);
 
 #endif /* COMM_CAN_H_ */

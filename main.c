@@ -99,7 +99,7 @@ int main(void) {
 	commands_init();
 
 	comm_can_init();
-	comm_can_set_baud(backup.config.can_baud_rate);
+	comm_can_set_baud(backup.config.can_baud_rate, 0);
 
 	timeout_init();
 
